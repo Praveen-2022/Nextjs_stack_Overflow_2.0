@@ -11,6 +11,7 @@ const GlobalSearch = () => {
         alt="search"
         width={24}
         height={24}
+        onChange={()=>{}}
         className="cursor-pointer"
         />
         <Input
