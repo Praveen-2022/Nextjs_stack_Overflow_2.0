@@ -1,17 +1,12 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import {Sheet,SheetClose,SheetContent,SheetTrigger} from "@/components/ui/sheet";
 import { sidebarLinks } from "@/constants";
-import { SignOutButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignedOut } from "@clerk/nextjs";
 
 const NavContent = () => {
   const pathname = usePathname();
@@ -36,9 +31,11 @@ const NavContent = () => {
                 alt={item.label}
                 width={20}
                 height={20}
-                className={`${isActive ? "" :"invert-colors"}`}
+                className={`${isActive ? "" : "invert-colors"}`}
               />
-              <p className={`${isActive ? 'base-bold' :'base-medium'}`}>{item.label}</p>
+              <p className={`${isActive ? "base-bold" : "base-medium"}`}>
+                {item.label}
+              </p>
             </Link>
           </SheetClose>
         );
@@ -68,17 +65,19 @@ const MobileNav = () => {
             src="/assets/images/site-logo.svg"
             width={23}
             height={23}
-            alt="DevFlow Logo"
+            alt="DevFlow"
           />
-          <p className="text-[24px] font-bold leading-[31.2px] font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">
-            Dev <span className="text-primary-500">Overflow</span>
+
+          <p className="h2-bold text-dark100_light900 font-spaceGrotesk ">
+            Dev <span className="text-primary-500">OverFlow</span>
           </p>
         </Link>
         <div>
-          <SheetClose>
+          <SheetClose asChild>
             <NavContent />
           </SheetClose>
-          <SignOutButton>
+
+          <SignedOut>
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href="/sign-in">
@@ -90,13 +89,13 @@ const MobileNav = () => {
 
               <SheetClose asChild>
                 <Link href="/sign-up">
-                  <Button className="small-medium light-border-2 btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
+                  <Button className="small-medium btn-tertiary text-dark400_light900 min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none">
                     Sign Up
                   </Button>
                 </Link>
               </SheetClose>
             </div>
-          </SignOutButton>
+          </SignedOut>
         </div>
       </SheetContent>
     </Sheet>
