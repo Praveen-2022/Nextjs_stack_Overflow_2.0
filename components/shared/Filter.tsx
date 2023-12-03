@@ -7,6 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import HomeFilters from "../home/HomeFilters";
 
 interface Props {
   filters: {
@@ -19,6 +20,7 @@ interface Props {
 
 const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
   return (
+    <>
     <div className={`relative ${containerClasses}`}>
       <Select
       // onValueChange={handleUpdateParams}
@@ -43,6 +45,8 @@ const Filter = ({ filters, otherClasses, containerClasses }: Props) => {
         </SelectContent>
       </Select>
     </div>
+    <HomeFilters/>
+    </>
   );
 };
 
