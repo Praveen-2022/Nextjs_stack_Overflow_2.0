@@ -4,19 +4,19 @@ import React from "react";
 import RenderTag from "./RenderTag";
 
 const hotQuestions = [
-  { _id: 1, title: "How do I use Express as a custom server in NextJs?" },
-  { _id: 2, title: "Why this error come: Error: connect ECONNREFUSED?" },
-  { _id: 3, title: "Programmatically navigate using React router" },
-  { _id: 4, title: "Why we use Server side rendring" },
-  { _id: 5, title: "What is Server side rendering" },
+  { _id: '1', title: "How do I use Express as a custom server in NextJs?" },
+  { _id: '2', title: "Why this error come: Error: connect ECONNREFUSED?" },
+  { _id: '3', title: "Programmatically navigate using React router" },
+  { _id: '4', title: "Why we use Server side rendring" },
+  { _id: '5', title: "What is Server side rendering" },
 ];
 
 const popularTags = [
-  { _id: 1, name: "Javascript", totalQuestions: 5 },
-  { _id: 2, name: "Typescript", totalQuestions: 5 },
-  { _id: 3, name: "ECMAscript", totalQuestions: 5 },
-  { _id: 4, name: "Next.js", totalQuestions: 5 },
-  { _id: 5, name: "React.js", totalQuestions: 5 },
+  { _id: '1', name: "Javascript", totalQuestions: 5 },
+  { _id: '2', name: "Typescript", totalQuestions: 5 },
+  { _id: '3', name: "ECMAscript", totalQuestions: 5 },
+  { _id: '4', name: "Next.js", totalQuestions: 5 },
+  { _id: '5', name: "React.js", totalQuestions: 5 },
 ];
 const RightSidebar = () => {
   return (
