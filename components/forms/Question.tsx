@@ -20,7 +20,8 @@ import { QuestionsSchema } from "@/lib/validations";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 
-const type:any ='create';
+const type: any = "create";
+
 const Question = () => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -38,7 +39,16 @@ const Question = () => {
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
-    
+
+    try {
+      //make an async call to your API -> create a question
+      //contain all form data
+      // navigate to home page
+    } catch(error){
+      
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   const handleInputKeyDown = (
@@ -216,7 +226,13 @@ const Question = () => {
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">
+          {isSubmitting ? (
+            <>{type === "edit" ? "Editing..." : "Posting..."}</>
+          ) : (
+            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+          )}
+        </Button>
       </form>
     </Form>
   );
