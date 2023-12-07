@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { Editor } from "@tinymce/tinymce-react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import React, { useState, useRef } from "react";
 import * as z from "zod";
-import { Button } from "@/components/ui/button";
+import { useRouter, usePathname } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
   FormControl,
@@ -16,19 +15,32 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { Button } from "../ui/button";
 import { QuestionsSchema } from "@/lib/validations";
-import Image from "next/image";
+import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "../ui/badge";
+import Image from "next/image";
+import { createQuestion } from "@/lib/actions/question.action";
 
-const type: any = "create";
+interface Props {
+  type?: string;
+  mongoUserId: string;
+  questionDetails?: string;
+}
 
-const Question = () => {
+const Question = ({ mongoUserId, type, questionDetails }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+  const parsedQuestionDetails =
+    questionDetails && JSON.parse(questionDetails || "");
+  const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
+    // need to return 
     defaultValues: {
       title: "",
       explanation: "",
@@ -37,15 +49,23 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
 
     try {
       //make an async call to your API -> create a question
       //contain all form data
       // navigate to home page
-    } catch(error){
-      
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+        path: pathname,
+      });
+
+      router.push("/");
+    } catch (error) {
     } finally {
       setIsSubmitting(false);
     }
