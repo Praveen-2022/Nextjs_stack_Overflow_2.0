@@ -20,7 +20,7 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
-import { createQuestion } from "@/lib/actions/question.action";
+import { createQuestion} from "@/lib/actions/question.action";
 
 interface Props {
   type?: string;
@@ -37,18 +37,15 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
     questionDetails && JSON.parse(questionDetails || "");
   const groupedTags = parsedQuestionDetails?.tags.map((tag: any) => tag.name);
 
-  // 1. Define your form.
   const form = useForm<z.infer<typeof QuestionsSchema>>({
     resolver: zodResolver(QuestionsSchema),
-    // need to return 
     defaultValues: {
-      title: "",
-      explanation: "",
-      tags: [],
+      title: parsedQuestionDetails?.title || "",
+      explanation: parsedQuestionDetails?.content || "",
+      tags: groupedTags || [],
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
 
@@ -71,10 +68,10 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
     }
   }
 
-  const handleInputKeyDown = (
+  function handleInputKeyDown(
     e: React.KeyboardEvent<HTMLInputElement>,
     field: any
-  ) => {
+  ) {
     if (e.key === "Enter" && field.name === "tags") {
       e.preventDefault();
 
@@ -98,7 +95,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
         }
       }
     }
-  };
+  }
 
   function handleTagRemove(tag: string, field: any) {
     const newTags = field.value.filter((t: string) => t !== tag);
@@ -141,17 +138,19 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
           render={({ field }) => (
             <FormItem className="flex w-full flex-col gap-3">
               <FormLabel className="paragraph-semibold text-dark400_light800">
-                Detailed explanation of your problem{" "}
+                Detailed Explanation of Your Problem{" "}
                 <span className="text-primary-500">*</span>
               </FormLabel>
               <FormControl className="mt-3.5">
                 <Editor
                   apiKey={process.env.NEXT_PUBLIC_TINY_EDITOR_API_KEY}
                   onInit={(evt, editor) => {
-                    //@ts-ignore
+                    // @ts-ignore
                     editorRef.current = editor;
                   }}
-                  initialValue=""
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
+                  initialValue={parsedQuestionDetails?.content || ""}
                   init={{
                     height: 350,
                     menubar: false,
@@ -171,9 +170,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                       "insertdatetime",
                       "media",
                       "table",
-                      "code",
-                      "help",
-                      "wordcount",
+                      "codesample",
                     ],
                     toolbar:
                       "undo redo | blocks | " +
@@ -246,11 +243,15 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
             </FormItem>
           )}
         />
-        <Button type="submit">
+        <Button
+          type="submit"
+          className="primary-gradient w-fit !text-light-900"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? (
-            <>{type === "edit" ? "Editing..." : "Posting..."}</>
+            <>{type === "Edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>{type === "edit" ? "Edit Question" : "Ask a Question"}</>
+            <>{type === "Create" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>
