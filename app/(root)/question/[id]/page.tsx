@@ -1,14 +1,25 @@
-import Metric from '@/components/shared/Metric'
-import ParseHTML from '@/components/shared/ParseHTML'
-import RenderTag from '@/components/shared/RenderTag'
-import { getQuestionById } from '@/lib/actions/question.action'
-import { formatAndDivideNumber, getTimestamp } from '@/lib/utils'
-import Image from 'next/image'
-import Link from 'next/link'
-import React from 'react'
+import Image from "next/image";
+import Link from "next/link";
+import React from "react";
+import Metric from "@/components/shared/Metric";
+import ParseHTML from "@/components/shared/ParseHTML";
+import RenderTag from "@/components/shared/RenderTag";
+import { getQuestionById } from "@/lib/actions/question.action";
+import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import AllAnswers from "@/components/shared/AllAnswers";
+import { auth } from "@clerk/nextjs";
+import { getUserById } from "@/lib/actions/user.action";
+import Answer from "@/components/forms/Answer";
 
-const QuestionDetails = async ({params,searchParams}:any) => {
-    const result = await getQuestionById({questionId:params.id})
+const QuestionDetails = async ({ params, searchParams }: any) => {
+  const result = await getQuestionById({ questionId: params.id });
+  
+  const { userId: clerkId } = auth();
+   let mongoUser;
+
+   if (clerkId) {
+     mongoUser = await getUserById({ userId: clerkId });
+   }
   return (
     <>
       <div className="flex-start w-full flex-col">
@@ -62,7 +73,7 @@ const QuestionDetails = async ({params,searchParams}:any) => {
       </div>
 
       <ParseHTML data={result.content} />
-      
+
       <div className="mt-8 flex flex-wrap gap-2">
         {result.tags.map((tag: any) => (
           <RenderTag
@@ -73,8 +84,20 @@ const QuestionDetails = async ({params,searchParams}:any) => {
           />
         ))}
       </div>
+
+      <AllAnswers
+        questionId={result._id}
+        userId={mongoUser._id}
+        totalAnswers={result.answers.length}
+        filter={searchParams?.filter}
+      />
+      <Answer
+        question={result.content}
+        questionId={JSON.stringify(result._id)}
+        authorId={JSON.stringify(mongoUser._id)}
+      />
     </>
   );
-}
+};
 
-export default QuestionDetails
+export default QuestionDetails;
