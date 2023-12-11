@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 
 interface Props {
   type: string;
@@ -31,7 +32,20 @@ const Votes = ({
   const pathname = usePathname();
   const router = useRouter();
   
-  const handleSave = () => {};
+  const handleSave = async () => {
+     await toggleSaveQuestion({
+       userId: JSON.parse(userId),
+       questionId: JSON.parse(itemId),
+       path: pathname,
+     });
+
+     return toast({
+       title: `Question ${
+         !hasSaved ? "Saved in" : "Removed from"
+       } your collection`,
+       variant: !hasSaved ? "default" : "destructive",
+     });
+  };
 
   const handleVote =async (action:string) => {
     if(!userId){

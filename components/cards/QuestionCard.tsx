@@ -3,6 +3,8 @@ import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+import { SignedIn } from "@clerk/nextjs";
+
 
 interface QuestionProps {
   _id: string;
@@ -15,16 +17,16 @@ interface QuestionProps {
     _id: string;
     name: string;
     picture: string;
-    // clerkId?: string;
+    clerkId?: string;
   };
-  upvotes: number;
+  upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
-  //   clerkId?: string | null;
+    clerkId?: string | null;
 }
 const QuestionCard = ({
-  // clerkId,
+  clerkId,
   _id,
   title,
   tags,
@@ -71,7 +73,7 @@ const QuestionCard = ({
         <Metric
           imgUrl="/assets/icons/like.svg"
           alt="Upvotes"
-          value={formatAndDivideNumber(upvotes)}
+          value={formatAndDivideNumber(upvotes.length)}
           title=" Votes"
           //   href=""
           isAuthor
