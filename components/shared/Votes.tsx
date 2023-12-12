@@ -8,6 +8,8 @@ import { usePathname } from "next/navigation";
 import { useRouter } from "next/navigation";
 import { toast } from "../ui/use-toast";
 import { toggleSaveQuestion } from "@/lib/actions/user.action";
+import { useEffect } from "react";
+import { viewQuestion } from "@/lib/actions/interaction.action";
 
 interface Props {
   type: string;
@@ -105,12 +107,12 @@ const Votes = ({
     }
   };
 
-    // useEffect(() => {
-    //   viewQuestion({
-    //     questionId: JSON.parse(itemId),
-    //     userId: userId ? JSON.parse(userId) : undefined,
-    //   });
-    // }, [itemId, userId, pathname, router]);
+    useEffect(() => {
+      viewQuestion({
+        questionId: JSON.parse(itemId),
+        userId: userId ? JSON.parse(userId) : undefined,
+      });
+    }, [itemId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">

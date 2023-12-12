@@ -10,7 +10,7 @@ import {
 } from "./shared.types";
 import { revalidatePath } from "next/cache";
 import Question from "@/database/question.modal";
-// import Interaction from "@/database/interaction.modal";
+import Interaction from "@/database/interaction.modal";
 import User from "@/database/user.modal";
 
 export async function createAnswer(params: CreateAnswerParams) {
@@ -26,13 +26,13 @@ export async function createAnswer(params: CreateAnswerParams) {
       $push: { answers: newAnswer._id },
     });
 
-    // await Interaction.create({
-    //   user: author,
-    //   action: "answer",
-    //   question,
-    //   answer: newAnswer._id,
-    //   tags: questionObject.tags,
-    // });
+    await Interaction.create({
+      user: author,
+      action: "answer",
+      question,
+      answer: newAnswer._id,
+      tags: questionObject.tags,
+    });
 
     await User.findByIdAndUpdate(author, { $inc: { reputation: 10 } });
 
@@ -177,7 +177,7 @@ export async function deleteAnswer(params: DeleteAnswerParams) {
       { _id: answer.question },
       { $pull: { answers: answerId } }
     );
-    // await Interaction.deleteMany({ answer: answerId });
+    await Interaction.deleteMany({ answer: answerId });
 
     revalidatePath(path);
   } catch (error) {

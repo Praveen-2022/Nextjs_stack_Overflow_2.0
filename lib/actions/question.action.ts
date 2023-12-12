@@ -15,7 +15,7 @@ import {
 import User from "@/database/user.modal";
 import { revalidatePath } from "next/cache";
 // import Answer from "@/database/answer.modal";
-// import Interaction from "@/database/interaction.modal";
+import Interaction from "@/database/interaction.modal";
 import { FilterQuery } from "mongoose";
 
 export async function createQuestion(params: CreateQuestionParams) {
@@ -49,15 +49,15 @@ export async function createQuestion(params: CreateQuestionParams) {
 
     // Create an interaction record for the user's  qsk_question action
 
-    // await Interaction.create({
-    //   user: author,
-    //   action: "ask_question",
-    //   question: question._id,
-    //   tag: tagDocuments,
-    // });
+    await Interaction.create({
+      user: author,
+      action: "ask_question",
+      question: question._id,
+      tag: tagDocuments,
+    });
 
     // increment author's reputation by +5 for creating a question
-    // await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
   } catch (error) {
