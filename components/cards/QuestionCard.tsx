@@ -4,7 +4,7 @@ import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import { SignedIn } from "@clerk/nextjs";
-
+import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface QuestionProps {
   _id: string;
@@ -18,13 +18,14 @@ interface QuestionProps {
     name: string;
     picture: string;
     clerkId?: string;
-  };
+  }[];
   upvotes: string[];
   views: number;
   answers: Array<object>;
   createdAt: Date;
-    clerkId?: string | null;
+  clerkId?: string | null;
 }
+
 const QuestionCard = ({
   clerkId,
   _id,
@@ -36,6 +37,8 @@ const QuestionCard = ({
   answers,
   createdAt,
 }: QuestionProps) => {
+  const showActionButtons = clerkId && clerkId === author[0].clerkId;
+
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">
       <div className="flex flex-col-reverse items-start justify-between gap-5 sm:flex-row">
@@ -45,14 +48,20 @@ const QuestionCard = ({
             {/* {String(createdAt)} */}
             {getTimestamp(createdAt)}
           </span>
+          <Link href={`/question/${_id}`}>
+            <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
+              {title}
+            </h3>
+          </Link>
         </div>
-        <Link href={`/question/${_id}`}>
-          <h3 className="sm:h3-semibold base-semibold text-dark200_light900 line-clamp-1 flex-1">
-            {title}
-          </h3>
-        </Link>
+        
+        {/* If signed in add edit delete actions */}
+        <SignedIn>
+          {showActionButtons && (
+            <EditDeleteAction type="Question" itemId={JSON.stringify(_id)} />
+          )}
+        </SignedIn>
       </div>
-      {/* If signed in add edit delete actions */}
 
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (
@@ -62,11 +71,11 @@ const QuestionCard = ({
 
       <div className="flex-between mt-6 w-full flex-wrap gap-3">
         <Metric
-          imgUrl="/assets/icons/avatar.svg"
+          imgUrl={author[0].picture}
           alt="user"
-          value={author.name}
-          title={` - ${getTimestamp(createdAt)}`}
-          href={`/profile/${author._id}`}
+          value={author[0].name}
+          title={` - asked ${getTimestamp(createdAt)}`}
+          href={`/profile/${author[0]._id}`}
           isAuthor
           textStyles="body-medium text-dark400_light800"
         />
@@ -75,8 +84,6 @@ const QuestionCard = ({
           alt="Upvotes"
           value={formatAndDivideNumber(upvotes.length)}
           title=" Votes"
-          //   href=""
-          isAuthor
           textStyles="samll-medium text-dark400_light800"
         />
 
@@ -85,8 +92,6 @@ const QuestionCard = ({
           alt="message"
           value={formatAndDivideNumber(answers.length)}
           title=" Answers"
-          //   href=""
-          isAuthor
           textStyles="samll-medium text-dark400_light800"
         />
 
@@ -95,8 +100,6 @@ const QuestionCard = ({
           alt="eye"
           value={formatAndDivideNumber(views)}
           title=" Views"
-          //   href=""
-          isAuthor
           textStyles="samll-medium text-dark400_light800"
         />
       </div>
