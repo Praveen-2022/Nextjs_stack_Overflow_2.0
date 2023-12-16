@@ -14,10 +14,9 @@ import {
 } from "./shared.types";
 import User from "@/database/user.modal";
 import { revalidatePath } from "next/cache";
-// import Answer from "@/database/answer.modal";
+import Answer from "@/database/answer.modal";
 import Interaction from "@/database/interaction.modal";
 import { FilterQuery } from "mongoose";
-import Answer from "@/database/answer.modal";
 
 export async function createQuestion(params: CreateQuestionParams) {
   try {
