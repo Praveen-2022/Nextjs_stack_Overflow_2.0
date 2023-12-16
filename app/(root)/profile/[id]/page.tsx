@@ -1,13 +1,16 @@
-import ProfileLink from "@/components/shared/ProfileLink";
-import { Button } from "@/components/ui/button";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import React from "react";
+import Image from "next/image";
 import { getUserInfo } from "@/lib/actions/user.action";
-import { getJoinedDate } from "@/lib/utils";
 import { URLProps } from "@/types";
 import { SignedIn, auth } from "@clerk/nextjs";
-import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { getJoinedDate } from "@/lib/utils";
+import ProfileLink from "@/components/shared/ProfileLink";
+import Stats from "@/components/shared/Stats";
+import QuestionTab from "@/components/shared/QuestionTab";
+import AnswerTab from "@/components/shared/AnswerTab";
 
 const Profile = async ({ params, searchParams }: URLProps) => {
   const userInfo = await getUserInfo({ userId: params.id });
@@ -69,7 +72,13 @@ const Profile = async ({ params, searchParams }: URLProps) => {
           </SignedIn>
         </div>
       </div>
-      {/* Stats */}
+      {/* Stats Section */}
+      <Stats
+        totalQuestions={userInfo.totalQuestions}
+        totalAnswers={userInfo.totalAnswers}
+        badges={userInfo.badgeCounts}
+      />
+
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList className="background-light800_dark400 min-h-[42px] p-1">
@@ -80,7 +89,7 @@ const Profile = async ({ params, searchParams }: URLProps) => {
               Answers
             </TabsTrigger>
           </TabsList>
-          {/* <TabsContent
+          <TabsContent
             value="top-posts"
             className="mt-5 flex w-full flex-col gap-6"
           >
@@ -96,7 +105,7 @@ const Profile = async ({ params, searchParams }: URLProps) => {
               userId={userInfo.user._id}
               clerkId={clerkId}
             />
-          </TabsContent> */}
+          </TabsContent>
         </Tabs>
       </div>
     </>
