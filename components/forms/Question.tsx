@@ -20,8 +20,7 @@ import { QuestionsSchema } from "@/lib/validations";
 import { Editor } from "@tinymce/tinymce-react";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
-import { createQuestion } from "@/lib/actions/question.action";
-import { useTheme } from "@/context/ThemeProvider";
+import { createQuestion, editQuestion } from "@/lib/actions/question.action";
 
 interface Props {
   type?: string;
@@ -30,7 +29,6 @@ interface Props {
 }
 
 const Question = ({ mongoUserId, type, questionDetails }: Props) => {
-  const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -52,19 +50,27 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
     setIsSubmitting(true);
 
     try {
-      //make an async call to your API -> create a question
-      //contain all form data
-      // navigate to home page
-      await createQuestion({
-        title: values.title,
-        content: values.explanation,
-        tags: values.tags,
-        author: JSON.parse(mongoUserId),
-        path: pathname,
-      });
+      if (type === "Edit") {
+        await editQuestion({
+          questionId: parsedQuestionDetails._id,
+          title: values.title,
+          content: values.explanation,
+          path: pathname,
+        });
+        router.push(`/question/${parsedQuestionDetails._id}`);
+      } else {
+        await createQuestion({
+          title: values.title,
+          content: values.explanation,
+          tags: values.tags,
+          author: JSON.parse(mongoUserId),
+          path: pathname,
+        });
 
-      router.push("/");
+        router.push("/");
+      }
     } catch (error) {
+      console.log(error);
     } finally {
       setIsSubmitting(false);
     }
@@ -180,8 +186,6 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
                       "alignright alignjustify | bullist numlist outdent indent | " +
                       "removeformat | help",
                     content_style: "body { font-family:Inter; font-size:16px }",
-                    skin: mode === "dark" ? "oxide-dark" : "oxide",
-                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
@@ -255,7 +259,7 @@ const Question = ({ mongoUserId, type, questionDetails }: Props) => {
           {isSubmitting ? (
             <>{type === "Edit" ? "Editing..." : "Posting..."}</>
           ) : (
-            <>{type === "Create" ? "Edit Question" : "Ask a Question"}</>
+            <>{type === "Edit" ? "Edit Question" : "Ask a Question"}</>
           )}
         </Button>
       </form>
