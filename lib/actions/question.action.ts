@@ -83,7 +83,7 @@ export async function getQuestions(params: GetQuestionsParams) {
         { content: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
-
+// filtering
     switch (filter) {
       case "newest":
         sortOptions = { createdAt: -1 };
