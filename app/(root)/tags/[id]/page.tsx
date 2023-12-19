@@ -4,7 +4,7 @@ import NoResult from "@/components/shared/NoResult";
 import { getQuestionsByTagId } from "@/lib/actions/tag.actions";
 import { URLProps } from "@/types";
 import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
-// import Pagination from "@/components/shared/Pagination";
+import Pagination from "@/components/shared/Pagination";
 
 const TagDetails = async ({ params, searchParams }: URLProps) => {
 //  added search functionality into Tags page
@@ -57,12 +57,12 @@ const TagDetails = async ({ params, searchParams }: URLProps) => {
 
 {/* TODO: pagination reminder */}
 
-      {/* <div className="mt-10">
+      <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 };

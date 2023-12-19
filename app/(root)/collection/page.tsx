@@ -6,7 +6,7 @@ import QuestionCard from "@/components/cards/QuestionCard";
 import { getSavedQuestions } from "@/lib/actions/user.action";
 import { auth } from "@clerk/nextjs";
 import { SearchParamsProps } from "@/types";
-// import Pagination from "@/components/shared/Pagination";
+import Pagination from "@/components/shared/Pagination";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -76,13 +76,12 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
           />
         )}
       </div>
-
-      {/* <div className="mt-10">
+      <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={results.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 }

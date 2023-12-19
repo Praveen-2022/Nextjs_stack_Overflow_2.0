@@ -6,7 +6,7 @@ import { getAllTags } from "@/lib/actions/tag.actions";
 import { SearchParamsProps } from "@/types";
 import Filter from "@/components/shared/Filter";
 import { TagFilters } from "@/constants/filters";
-// import Pagination from "@/components/shared/Pagination";
+import Pagination from "@/components/shared/Pagination";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -79,12 +79,12 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
         )}
       </section>
       {/* todo: pagination reminder */}
-      {/* <div className="mt-10">
+      <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 };

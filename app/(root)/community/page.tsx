@@ -7,6 +7,7 @@ import { getAllUsers } from "@/lib/actions/user.action";
 import { SearchParamsProps } from "@/types";
 import { Metadata } from "next";
 import Link from "next/link";
+import Pagination from "@/components/shared/Pagination";
 
 export const metadata: Metadata = {
   title: "Community | Dev Overflow",
@@ -58,12 +59,12 @@ const Community = async ({ searchParams }: SearchParamsProps) => {
         )}
       </section>
 {/* TODO : REturn for pagination */}
-      {/* <div className="mt-10">
+      <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}
           isNext={result.isNext}
         />
-      </div> */}
+      </div>
     </>
   );
 };
