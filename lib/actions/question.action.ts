@@ -76,7 +76,7 @@ export async function getQuestions(params: GetQuestionsParams) {
 
     const query: FilterQuery<typeof Question> = {};
     let sortOptions = {};
-
+// local search expression => localSearchbar ke liye query filter
     if (searchQuery) {
       query.$or = [
         { title: { $regex: new RegExp(searchQuery, "i") } },

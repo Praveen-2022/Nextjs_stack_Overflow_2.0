@@ -6,6 +6,7 @@ import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import { getQuestions } from "@/lib/actions/question.action";
+import { SearchParamsProps } from "@/types";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -18,11 +19,11 @@ export const metadata: Metadata = {
   },
 };
 
-const questions ="";
 
-
-export default async function Home() {
-  const result = await getQuestions({});
+export default async function Home({searchParams}:SearchParamsProps) {
+  const result = await getQuestions({
+    searchQuery:searchParams.q,
+  });
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -33,6 +34,7 @@ export default async function Home() {
           </Button>
         </Link>
       </div>
+
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchBar
           route="/"
