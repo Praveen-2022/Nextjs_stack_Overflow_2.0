@@ -35,7 +35,7 @@ const AllAnswers = async ({
 
         <Filter filters={AnswerFilters} />
       </div>
-{/* output of ansers */}
+      {/* output of ansers */}
       <div>
         {result.answers.map((answer) => (
           <article key={answer._id} className="light-border border-b py-10">
