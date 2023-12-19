@@ -19,6 +19,7 @@ export const metadata: Metadata = {
 };
 
 const Tags = async ({ searchParams }: SearchParamsProps) => {
+  //  added search functionality into Tags page
   const result = await getAllTags({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
@@ -77,7 +78,7 @@ const Tags = async ({ searchParams }: SearchParamsProps) => {
           />
         )}
       </section>
-{/* todo: pagination reminder */}
+      {/* todo: pagination reminder */}
       {/* <div className="mt-10">
         <Pagination
           pageNumber={searchParams?.page ? +searchParams.page : 1}

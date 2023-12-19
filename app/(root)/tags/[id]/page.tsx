@@ -7,6 +7,7 @@ import LocalSearchBar from "@/components/shared/search/LocalSearchBar";
 // import Pagination from "@/components/shared/Pagination";
 
 const TagDetails = async ({ params, searchParams }: URLProps) => {
+//  added search functionality into Tags page
   const result = await getQuestionsByTagId({
     tagId: params.id,
     page: searchParams.page ? +searchParams.page : 1,
