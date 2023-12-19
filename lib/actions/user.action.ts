@@ -95,7 +95,7 @@ export async function getAllUsers(params: GetAllUsersParams) {
     const skipAmount = (page - 1) * pageSize;
 
     const query: FilterQuery<typeof User> = {};
-
+// use to search => a member into community
     if (searchQuery) {
       query.$or = [
         { name: { $regex: new RegExp(searchQuery, "i") } },
