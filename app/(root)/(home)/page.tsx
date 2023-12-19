@@ -22,7 +22,12 @@ export const metadata: Metadata = {
 
 export default async function Home({searchParams}:SearchParamsProps) {
   const result = await getQuestions({
-    searchQuery:searchParams.q,
+    // for local search
+    searchQuery: searchParams.q,
+    // for filter
+    filter: searchParams.filter,
+    // for not breaking already what's in url
+    page: searchParams.page ? +searchParams.page : 1,
   });
   return (
     <>
