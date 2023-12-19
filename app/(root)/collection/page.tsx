@@ -22,6 +22,7 @@ export default async function Collection({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
 
   if (!userId) return null;
+// added search functionality into collection page
 
   const results = await getSavedQuestions({
     clerkId: userId,
