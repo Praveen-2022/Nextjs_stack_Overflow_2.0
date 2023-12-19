@@ -28,7 +28,7 @@ const Profile = async ({ params, searchParams }: URLProps) => {
           />
           <div className="mt-3">
             <h2 className="h2-bold text-dark100_light900">
-              @{userInfo.user.name}
+              {userInfo.user.name}
             </h2>
             <p className="paragraph-regular text-dark200_light800">
               @{userInfo.user.username}
