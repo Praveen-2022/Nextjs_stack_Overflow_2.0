@@ -114,6 +114,7 @@ export const removeKeysFromQuery = ({
   );
 };
 
+// Badge System conditions
 interface BadgeParam {
   criteria: {
     type: keyof typeof BADGE_CRITERIA;

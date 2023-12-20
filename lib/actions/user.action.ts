@@ -243,6 +243,8 @@ export async function getUserInfo(params: GetUserByIdParams) {
 
     const totalQuestions = await Question.countDocuments({ author: user._id });
     const totalAnswers = await Answer.countDocuments({ author: user._id });
+  //  Providing the Badge System to user
+  
     const [questionUpvotes] = await Question.aggregate([
       { $match: { author: user._id } },
       {
