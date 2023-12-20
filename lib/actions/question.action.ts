@@ -47,7 +47,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       $push: { tags: { $each: tagDocuments } },
     });
 
-    // Create an interaction record for the user's  qsk_question action
+    // Create an interaction record for the user's  qsk_question actions
 
     await Interaction.create({
       user: author,
@@ -56,7 +56,7 @@ export async function createQuestion(params: CreateQuestionParams) {
       tag: tagDocuments,
     });
 
-    // increment author's reputation by +5 for creating a question
+    // increment author's reputation by +5 for creating a questions
     await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
 
     revalidatePath(path);
@@ -76,14 +76,14 @@ export async function getQuestions(params: GetQuestionsParams) {
 
     const query: FilterQuery<typeof Question> = {};
     let sortOptions = {};
-// local search expression => localSearchbar ke liye query filter
+    // local search expression => localSearchbar ke liye query filter
     if (searchQuery) {
       query.$or = [
         { title: { $regex: new RegExp(searchQuery, "i") } },
         { content: { $regex: new RegExp(searchQuery, "i") } },
       ];
     }
-// filtering
+    // filtering
     switch (filter) {
       case "newest":
         sortOptions = { createdAt: -1 };
@@ -159,15 +159,15 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
     const question = await Question.findByIdAndUpdate(questionId, updateQuery, {
       new: true,
     });
- 
+
     if (!question) {
       throw new Error("Question not found");
     }
-
+    // Increment author's reputation by +1/-1 fro upvoting/revoking an upvote to the question
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasupVoted ? -1 : 1 },
     });
-
+    // increasing autor's reputation by +10/-10 for recieving an upvote/downvote to the question
     await User.findByIdAndUpdate(question.author, {
       $inc: { reputation: hasupVoted ? -10 : 10 },
     });

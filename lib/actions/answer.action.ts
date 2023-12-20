@@ -25,6 +25,7 @@ export async function createAnswer(params: CreateAnswerParams) {
     const questionObject = await Question.findByIdAndUpdate(question, {
       $push: { answers: newAnswer._id },
     });
+// providing the reputaion points for creating questions
 
     await Interaction.create({
       user: author,
@@ -102,7 +103,7 @@ export async function upvoteAnswers(params: AnswerVoteParams) {
     if (!answer) {
       throw new Error("Answer not found");
     }
-
+// Increment autor's reputation
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasupVoted ? -2 : 2 },
     });
@@ -144,7 +145,7 @@ export async function downvoteAnswers(params: AnswerVoteParams) {
     if (!answer) {
       throw new Error("Question not found");
     }
-
+    // Decrement autor's reputation
     await User.findByIdAndUpdate(userId, {
       $inc: { reputation: hasdownVoted ? -2 : 2 },
     });
