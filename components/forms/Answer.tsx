@@ -18,6 +18,7 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { createAnswer } from "@/lib/actions/answer.action";
 import { usePathname } from "next/navigation";
+import { toast } from "../ui/use-toast";
 
 interface Props {
   question: string;
@@ -37,8 +38,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       answer: "",
     },
   });
-// console.log(process.env.NEXT_PUBLIC_SERVER_URL);
-console.log(process.env.OPENAI_API_KEY);
+
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true);
 
@@ -82,8 +82,6 @@ console.log(process.env.OPENAI_API_KEY);
 
       // Convert plain text into HTML format
       const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
-      console.log(aiAnswer);
-
       if (editorRef.current) {
         const editor = editorRef.current as any;
         editor.setContent(formattedAnswer);
@@ -91,9 +89,18 @@ console.log(process.env.OPENAI_API_KEY);
 
       // @todo -> Toast notifications
     } catch (error) {
+            toast({
+              title: "Error generating AI answer ⚠️",
+              variant: "destructive",
+            });
       console.log(error);
     } finally {
       setIsSubmittingAI(false);
+
+            toast({
+              title: "AI answer generated successfully 🎉",
+              variant: "default",
+            });
     }
   };
 

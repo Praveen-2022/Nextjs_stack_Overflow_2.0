@@ -1,7 +1,10 @@
 "use client";
 
 import { downvoteAnswers, upvoteAnswers } from "@/lib/actions/answer.action";
-import { downvoteQuestion, upvoteQuestion } from "@/lib/actions/question.action";
+import {
+  downvoteQuestion,
+  upvoteQuestion,
+} from "@/lib/actions/question.action";
 import { formatAndDivideNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -33,32 +36,32 @@ const Votes = ({
 }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
-  
-  const handleSave = async () => {
-     await toggleSaveQuestion({
-       userId: JSON.parse(userId),
-       questionId: JSON.parse(itemId),
-       path: pathname,
-     });
 
-     return toast({
-       title: `Question ${
-         !hasSaved ? "Saved in" : "Removed from"
-       } your collection`,
-       variant: !hasSaved ? "default" : "destructive",
-     });
+  const handleSave = async () => {
+    await toggleSaveQuestion({
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(itemId),
+      path: pathname,
+    });
+
+    return toast({
+      title: `Question ${
+        !hasSaved ? "Saved in" : "Removed from"
+      } your collection`,
+      variant: !hasSaved ? "default" : "destructive",
+    });
   };
 
-  const handleVote =async (action:string) => {
-    if(!userId){
+  const handleVote = async (action: string) => {
+    if (!userId) {
       return toast({
-        title:"Please Log In",
-        description:"You must be logged in to perform this action",
-      })
+        title: "Please Log In",
+        description: "You must be logged in to perform this action",
+      });
     }
 
-    if(action === "upvote"){
-      if(type === "Question"){
+    if (action === "upvote") {
+      if (type === "Question") {
         await upvoteQuestion({
           questionId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -66,7 +69,7 @@ const Votes = ({
           hasdownVoted,
           path: pathname,
         });
-      }else if(type === "Answer"){
+      } else if (type === "Answer") {
         await upvoteAnswers({
           answerId: JSON.parse(itemId),
           userId: JSON.parse(userId),
@@ -75,10 +78,10 @@ const Votes = ({
           path: pathname,
         });
       }
-       return toast({
-         title: `Upvote ${!hasupVoted ? "Successful" : "Removed"}`,
-         variant: !hasupVoted ? "default" : "destructive",
-       });
+      return toast({
+        title: `Upvote ${!hasupVoted ? "Successful" : "Removed"}`,
+        variant: !hasupVoted ? "default" : "destructive",
+      });
     }
 
     if (action === "downvote") {
@@ -107,12 +110,12 @@ const Votes = ({
     }
   };
 
-    useEffect(() => {
-      viewQuestion({
-        questionId: JSON.parse(itemId),
-        userId: userId ? JSON.parse(userId) : undefined,
-      });
-    }, [itemId, userId, pathname, router]);
+  useEffect(() => {
+    viewQuestion({
+      questionId: JSON.parse(itemId),
+      userId: userId ? JSON.parse(userId) : undefined,
+    });
+  }, [itemId, userId, pathname, router]);
 
   return (
     <div className="flex gap-5">
