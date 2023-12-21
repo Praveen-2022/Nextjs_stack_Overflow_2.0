@@ -27,9 +27,9 @@ interface Props {
 
 const Answer = ({ question, questionId, authorId }: Props) => {
   const pathname = usePathname();
-  const { mode } = useTheme();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittingAI, setIsSubmittingAI] = useState(false);
+  const { mode } = useTheme();
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -37,7 +37,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
       answer: "",
     },
   });
-
+// console.log(process.env.NEXT_PUBLIC_SERVER_URL);
+console.log(process.env.OPENAI_API_KEY);
   const handleCreateAnswer = async (values: z.infer<typeof AnswerSchema>) => {
     setIsSubmitting(true);
 
@@ -81,6 +82,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
 
       // Convert plain text into HTML format
       const formattedAnswer = aiAnswer.reply.replace(/\n/g, "<br />");
+      console.log(aiAnswer);
 
       if (editorRef.current) {
         const editor = editorRef.current as any;
