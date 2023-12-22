@@ -75,7 +75,6 @@ const GlobalSearch = () => {
         />
         <Input
           type="text"
-          placeholder="Search Globally"
           value={search}
           onChange={(e) => {
             setSearch(e.target.value);
@@ -83,7 +82,8 @@ const GlobalSearch = () => {
             if (!isOpen) setIsOpen(true);
             if (e.target.value === "" && isOpen) setIsOpen(false);
           }}
-          className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
+          placeholder="Search Globally"
+          className="paragraph-regular no-focus placeholder text-dark400_light700 border-none bg-transparent shadow-none outline-none"
         />
       </div>
       {isOpen && <GlobalResult />}
