@@ -23,6 +23,7 @@ const RightSidebar = async() => {
               <p className="body-medium text-dark500_light700">
                 {question.title}
               </p>
+
               <Image
                 src="/assets/icons/chevron-right.svg"
                 alt="chevron-right"
@@ -44,7 +45,7 @@ const RightSidebar = async() => {
               key={tag._id}
               _id={tag._id}
               name={tag.name}
-              totalQuestions={tag.totalQuestions}
+              totalQuestions={tag.numberOfQuestions}
               showCount
             />
           ))}
