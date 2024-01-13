@@ -15,7 +15,7 @@ const Navbar = () => {
           src="/assets/images/site-logo.svg"
           width={30}
           height={30}
-          alt="DevFlow"
+          alt="DevGuru's Hub"
         />
 
         <p className="h2-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-sm:hidden">

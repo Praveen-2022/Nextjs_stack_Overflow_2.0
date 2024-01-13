@@ -10,7 +10,7 @@ import Link from "next/link";
 import Pagination from "@/components/shared/Pagination";
 
 export const metadata: Metadata = {
-  title: "Community | Dev Overflow",
+  title: "Community | Dev Guru's Hub",
   description:
     "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate withe developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
   icons: {

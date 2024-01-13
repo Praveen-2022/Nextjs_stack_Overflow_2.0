@@ -1,4 +1,4 @@
-# Next.js 14 DevOverflow
+# Next.js 14 DevGuru's Hub
 
 <!-- GitHub badges -->
 
@@ -19,7 +19,7 @@ Explore the live demonstration of the project: [nextjs14-devoverflow](https://ne
 <details><summary><b>Folder Structure</b></summary>
 
 ```bash
-nextjs14-devoverflow/
+nextjs14-devguru's hub/
 ├── app/
 ├   ├── favicon.ico
 ├   ├── globals.css
@@ -210,7 +210,7 @@ nextjs14-devoverflow/
 
 ## ✨ Technologies Used
 
-<details><summary><b>DevOverflow</b> is built using the following technologies:</summary>
+<details><summary><b>Dev Guru's Hub</b> is built using the following technologies:</summary>
 
 - [TypeScript](https://www.typescriptlang.org/): TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
 - [Next.js](https://nextjs.org/): Next.js is a React framework for building server-side rendered and statically generated web applications.
@@ -306,7 +306,7 @@ Environment variables[^12] can be used for configuration. They must be set befor
 
 > [Environment variables](https://en.wikipedia.org/wiki/Environment_variable) are variables that are set in the operating system or shell, typically used to configure programs.
 
-**DevOverflow** uses [Clerk](https://clerk.com), [TinyMCE](https://uploadthing.com/), [RapidAPI](https://rapidapi.com), [OpenAI API](https://openai.com/blog/openai-api) and [MongoDB](https://mongodb.com) as external services. You need to create an account on each of these services and get the required credentials to run the app.
+**DevGuru'sHub** uses [Clerk](https://clerk.com), [TinyMCE](https://uploadthing.com/), [RapidAPI](https://rapidapi.com), [OpenAI API](https://openai.com/blog/openai-api) and [MongoDB](https://mongodb.com) as external services. You need to create an account on each of these services and get the required credentials to run the app.
 
 Create a `.env` file in the root directory of the project and add the following environment variables:
 

@@ -18,7 +18,7 @@ const SpaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "DevOverflow",
+  title: "DevGuru's Hub",
   description:
     "A community- driven by platform for asking and answring programming questions. Get hrlp, share Knowledge, and collaborate wht developers from around the world. Explore topics in web development, mobile app developmnet, algorithms, data structures, and amy more.",
   icons: {
