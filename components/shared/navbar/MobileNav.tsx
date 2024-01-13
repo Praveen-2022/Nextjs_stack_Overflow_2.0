@@ -63,17 +63,17 @@ const MobileNav = () => {
         <Link href="/" className="flex items-center gap-1">
           <Image
             src="/assets/images/site-logo.svg"
-            width={23}
-            height={23}
-            alt="DevFlow"
+            width={30}
+            height={30}
+            alt="DevGuru'Hub"
           />
 
           <p className="h2-bold text-dark100_light900 font-spaceGrotesk ">
-            Dev <span className="text-primary-500">OverFlow</span>
+            Dev <span className="text-primary-500">Guru's Hub</span>
           </p>
         </Link>
         <div>
-          <SheetClose asChild>
+           <SheetClose asChild>
             <NavContent />
           </SheetClose>
 
