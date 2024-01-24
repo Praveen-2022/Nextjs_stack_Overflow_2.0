@@ -14,7 +14,7 @@ Explore the live demonstration of the project: [nextjs14-devoverflow](https://ne
 
 ## 📝 Description
 
-**DevOverflow** is a complex Q&A platform for developers to ask questions, share knowledge, and learn from each other. It is built with Next.js, Tailwind CSS, Clerk, MongoDB, and more.
+**Dev Guru's Hub** is a complex Q&A platform for developers to ask questions, share knowledge, and learn from each other. It is built with Next.js, Tailwind CSS, Clerk, MongoDB, and more.
 
 <details><summary><b>Folder Structure</b></summary>
 
